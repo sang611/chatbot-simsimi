@@ -46,20 +46,27 @@ const filterText = async (msg) => {
     try {
         const {data} = await axios
         .get(
-            encodeURI("https://tuanxuong.com/api/simsimi/index.php?text=" + msg),
+            encodeURI(process.env.CHAT_BOT_URL),
             {
-                headers: {"Content-Type": "application/json;charset=UTF-8"}
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "X-gravitee-api-key": "1865b2fc-acdc-4fbe-980c-fbd248e4cba6"
+                },
+                params: {
+                    text: msg,
+                    lc: 'vn'
+                }
             })
             console.log(data)
-            if(data.response)
-            return unescape(data.response) ;
+            if(data.success)
+            return unescape(data.success) ;
     } catch(e) {
         console.log(e.toString())
         return "Lỗi rồi :(("
     }
     
 
-        return "";
+    return "";
     
 }
 
